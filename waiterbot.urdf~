@@ -1,0 +1,295 @@
+<?xml version="1.0"?>
+<robot name="waiterbot">
+  <link name="base_link" >
+    <visual>
+      <geometry>
+        <box size="0.6 0.5 0.4"/>
+      </geometry>
+      <origin xyz="0 0 0.35" rpy="0 0 0" />
+      <material name="metal">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="base_top_link" />
+  <link name="body_bottom_prismatic_link" />
+  <link name="body_bottom_roll_link" />
+  <link name="body_bottom_yaw_link" >
+    <visual>
+      <geometry>
+        <box size="0.4 0.4 0.7"/>
+      </geometry>
+      <origin xyz="0 0 0.35" rpy="0 0 0" />
+      <material name="metal">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="top_camera_base_link" >
+    <visual>
+      <geometry>
+        <box size="0.15 0.15 0.1"/>
+      </geometry>
+      <origin xyz="0 0 -0.1" rpy="0 0 0" />
+      <material name="black_plastic">
+        <color rgba="0.2 0.2 0.2 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="top_camera_yaw_link" />
+  <link name="top_camera_pitch_link" />
+  <link name="top_camera_link" >
+    <visual>
+      <geometry>
+        <box size="0.1 0.3 0.05"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <material name="black_plastic">
+        <color rgba="0.2 0.2 0.2 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="arm_base_link" >
+    <visual>
+      <geometry>
+        <box size="0.05 0.1 0.4"/>
+      </geometry>
+      <origin xyz="0 0 0.15" rpy="0 0 0" />
+      <material name="metal">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="arm_link_1" >
+    <visual>
+      <geometry>
+        <box size="0.03 0.08 0.1"/>
+      </geometry>
+      <origin xyz="0.03 0 0" rpy="0 0 0" />
+      <material name="metal">
+        <color rgba="0.2 0.2 0.2 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="arm_link_2" >
+    <visual>
+      <geometry>
+        <box size="0.3 0.05 0.05"/>
+      </geometry>
+      <origin xyz="0.15 0 0" rpy="0 0 0" />
+      <material name="black_plastic">
+        <color rgba="0.2 0.2 0.2 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="arm_link_3" >
+    <visual>
+      <geometry>
+        <box size="0.3 0.05 0.05"/>
+      </geometry>
+      <origin xyz="0.15 0 0" rpy="0 0 0" />
+      <material name="black_plastic">
+        <color rgba="0.2 0.2 0.2 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="arm_link_4" >
+    <visual>
+      <geometry>
+        <box size="0.1 0.05 0.05"/>
+      </geometry>
+      <origin xyz="0.05 0 0" rpy="0 0 0" />
+      <material name="black_plastic">
+        <color rgba="0.2 0.2 0.2 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="arm_link_5" >
+    <visual>
+      <geometry>
+        <box size="0.1 0.05 0.05"/>
+      </geometry>
+      <origin xyz="0.05 0 0" rpy="0 0 0" />
+      <material name="black_plastic">
+        <color rgba="0.2 0.2 0.2 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="arm_link_6" >
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+      <origin xyz="0.05 0 0" rpy="0 0 0" />
+      <material name="black_plastic">
+        <color rgba="0.2 0.2 0.2 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="arm_gripper_link" >
+    <visual>
+      <geometry>
+        <box size="0.05 0.02 0.02"/>
+      </geometry>
+      <origin xyz="0.025 0 0" rpy="0 0 0" />
+      <material name="black_plastic">
+        <color rgba="0.2 0.2 0.2 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="rear_camera_base_link" />
+  <link name="rear_camera_yaw_link" />
+  <link name="rear_camera_link" >
+    <visual>
+      <geometry>
+        <box size="0.1 0.3 0.05"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <material name="black_plastic">
+        <color rgba="0.2 0.2 0.2 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="base_top_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_top_link"/>
+    <origin xyz="0 0 0.5" rpy="0 0 0" />
+  </joint>
+
+  <joint name="body_bottom_prismatic_joint" type="prismatic">
+    <parent link="base_top_link"/>
+    <child link="body_bottom_prismatic_link"/>
+    <axis xyz="0 0 1" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <limit effort="1000.0" lower="0" upper="0.3" velocity="0.02" />
+  </joint>
+
+  <joint name="body_bottom_roll_joint" type="revolute">
+    <parent link="body_bottom_prismatic_link"/>
+    <child link="body_bottom_roll_link" />
+    <axis xyz="1 0 0" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <limit effort="1000.0" lower="-0.17" upper="0.17" velocity="0.1" />
+  </joint>
+
+  <joint name="body_bottom_yaw_joint" type="revolute">
+    <parent link="body_bottom_roll_link" />
+    <child link="body_bottom_yaw_link" />
+    <axis xyz="0 1 0" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <limit effort="1000.0" lower="-0.17" upper="0.17" velocity="0.1" />
+  </joint>
+
+  <joint name="top_camera_base_joint" type="fixed">
+    <parent link="body_bottom_yaw_link" />
+    <child link="top_camera_base_link" />
+    <origin xyz="0.1 0 0.8" rpy="0 0 0" />
+  </joint>
+
+  <joint name="top_camera_yaw_joint" type="revolute">
+    <parent link="top_camera_base_link" />
+    <child link="top_camera_yaw_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="0.5" />
+  </joint>
+
+  <joint name="top_camera_pitch_joint" type="revolute">
+    <parent link="top_camera_yaw_link" />
+    <child link="top_camera_pitch_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="1000.0" lower="-1" upper="1" velocity="0.5" />
+  </joint>
+
+  <joint name="top_camera_joint" type="fixed">
+    <parent link="top_camera_pitch_link" />
+    <child link="top_camera_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <joint name="arm_base_joint" type="fixed">
+    <parent link="body_bottom_yaw_link" />
+    <child link="arm_base_link" />
+    <origin xyz="0.25 -0.2 0.2" rpy="0 0 0" />
+  </joint>
+
+  <joint name="arm_joint_1" type="prismatic">
+    <parent link="arm_base_link" />
+    <child link="arm_link_1" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="1000.0" lower="0" upper="0.3" velocity="0.5" />
+  </joint>
+
+  <joint name="arm_joint_2" type="revolute" >
+    <parent link="arm_link_1" />
+    <child link="arm_link_2" />
+    <origin xyz="0.05 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="0.5" />
+  </joint> 
+
+  <joint name="arm_joint_3" type="revolute" >
+    <parent link="arm_link_2" />
+    <child link="arm_link_3" />
+    <origin xyz="0.3 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="0.5" />
+  </joint> 
+
+  <joint name="arm_joint_4" type="revolute" >
+    <parent link="arm_link_3" />
+    <child link="arm_link_4" />
+    <origin xyz="0.3 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="0.5" />
+  </joint>
+
+  <joint name="arm_joint_5" type="revolute" >
+    <parent link="arm_link_4" />
+    <child link="arm_link_5" />
+    <origin xyz="0.1 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="0.5" />
+  </joint> 
+
+  <joint name="arm_joint_6" type="revolute" >
+    <parent link="arm_link_5" />
+    <child link="arm_link_6" />
+    <origin xyz="0.05 0 0" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="0.5" />
+  </joint>
+
+  <joint name="arm_gripper_joint" type="revolute" >
+    <parent link="arm_link_6" />
+    <child link="arm_gripper_link" />
+    <origin xyz="0.05 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="0.5" />
+  </joint> 
+
+<!-- Rest of the arm -->
+
+  <joint name="rear_camera_base_joint" type="fixed">
+    <parent link="body_bottom_yaw_link" />
+    <child link="rear_camera_base_link" />
+    <origin xyz="-0.3 0 0.2" rpy="0 0 3.14" />
+  </joint>
+
+  <joint name="rear_camera_yaw_joint" type="fixed">
+    <parent link="rear_camera_base_link" />
+    <child link="rear_camera_yaw_link" />
+    <origin xyz="0 0 0" rpy="0 -0.7 0" />
+  </joint>
+
+  <joint name="rear_camera_joint" type="fixed">
+    <parent link="rear_camera_yaw_link" />
+    <child link="rear_camera_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+</robot>
+

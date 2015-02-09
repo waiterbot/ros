@@ -1,0 +1,384 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="waiterbot">
+
+  <xacro:property name="base_length"                value="0.6" />
+  <xacro:property name="base_width"                 value="0.48" />
+  <xacro:property name="base_height"                value="0.4" />
+  <xacro:property name="base_ground_clearance"      value="0.15" />
+  
+  <xacro:property name="body_length"                value="0.46" />
+  <xacro:property name="body_width"                 value="0.46" />
+  <xacro:property name="body_height"                value="0.7" />
+  <xacro:property name="body_base_min_gap"          value="0.05" />
+  <xacro:property name="body_base_max_gap"          value="0.35" />
+  <xacro:property name="body_max_sideways_angle"    value="0.17" />
+  <xacro:property name="body_max_forward_angle"     value="0.17" />
+  <xacro:property name="body_sideways_ang_vel"      value="0.1" />
+  <xacro:property name="body_forward_ang_vel"       value="0.1" />
+  <xacro:property name="body_vertical_vel"          value="0.02" />
+
+  <xacro:property name="top_camera_base_length"     value="0.15" />
+  <xacro:property name="top_camera_base_width"      value="0.15" />
+  <xacro:property name="top_camera_base_height"     value="0.07" />
+
+  <xacro:property name="top_camera_length"          value="0.08" />
+  <xacro:property name="top_camera_width"           value="0.3" />
+  <xacro:property name="top_camera_height"          value="0.05" />
+  <xacro:property name="top_camera_mounting_height" value="0.1" />
+  <xacro:property name="top_camera_mounting_distance" value="0.1" />
+  <xacro:property name="top_camera_yaw_limit"       value="2" />
+  <xacro:property name="top_camera_yaw_velocity"    value="0.5" />
+  <xacro:property name="top_camera_pitch_limit"     value="1" />
+  <xacro:property name="top_camera_pitch_velocity"  value="0.5" />
+
+  <xacro:property name="arm_position_x"             value="0.25" />
+  <xacro:property name="arm_position_y"             value="0.2" />
+  <xacro:property name="arm_position_z"             value="0.1" />
+
+  <xacro:property name="arm_base_slide_length"      value="0.02" />
+  <xacro:property name="arm_base_slide_width"       value="0.1" />
+  <xacro:property name="arm_base_slide_height"      value="0.4" />
+
+  <xacro:property name="arm_base_slide_limit"       value="0.3" />
+  <xacro:property name="arm_base_slide_velocity"    value="0.02" />
+
+  <xacro:property name="arm_base_length"            value="0.02" />
+  <xacro:property name="arm_base_width"             value="0.08" />
+  <xacro:property name="arm_base_height"            value="0.1" />
+
+  <xacro:property name="arm_link_2_length"          value="0.3" />
+  <xacro:property name="arm_link_2_width"           value="0.05" />
+  <xacro:property name="arm_link_2_height"          value="0.05" />
+
+  <xacro:property name="arm_joint_2_limit"          value="2" />
+  <xacro:property name="arm_joint_2_velocity"       value="0.5" />
+  <xacro:property name="arm_joint_2_offset"         value="0.05" />
+
+  <xacro:property name="arm_link_3_length"          value="0.3" />
+  <xacro:property name="arm_link_3_width"           value="0.05" />
+  <xacro:property name="arm_link_3_height"          value="0.05" />
+
+  <xacro:property name="arm_joint_3_limit"          value="2" />
+  <xacro:property name="arm_joint_3_velocity"       value="0.5" />
+
+  <xacro:property name="arm_link_4_length"          value="0.1" />
+  <xacro:property name="arm_link_4_width"           value="0.05" />
+  <xacro:property name="arm_link_4_height"          value="0.05" />
+
+  <xacro:property name="arm_joint_4_limit"          value="2" />
+  <xacro:property name="arm_joint_4_velocity"       value="0.5" />
+
+  <xacro:property name="arm_link_5_length"          value="0.06" />
+  <xacro:property name="arm_link_5_width"           value="0.04" />
+  <xacro:property name="arm_link_5_height"          value="0.04" />
+
+  <xacro:property name="arm_joint_5_limit"          value="2" />
+  <xacro:property name="arm_joint_5_velocity"       value="0.5" />
+
+  <xacro:property name="arm_link_6_length"          value="0.06" />
+  <xacro:property name="arm_link_6_width"           value="0.04" />
+  <xacro:property name="arm_link_6_height"          value="0.04" />
+
+  <xacro:property name="arm_joint_6_limit"          value="2" />
+  <xacro:property name="arm_joint_6_velocity"       value="0.5" />
+
+  <xacro:property name="gripper_length"             value="0.06" />
+  <xacro:property name="gripper_width"              value="0.04" />
+  <xacro:property name="gripper_height"             value="0.04" />
+
+  <xacro:property name="gripper_limit"              value="2" />
+  <xacro:property name="gripper_velocity"           value="0.5" />
+
+  <xacro:property name="rear_camera_length"         value="0.08" />
+  <xacro:property name="rear_camera_width"          value="0.3" />
+  <xacro:property name="rear_camera_height"             value="0.05" />
+  <xacro:property name="rear_camera_mounting_height"    value="0.1" />
+  <xacro:property name="rear_camera_mounting_distance"  value="0.1" />
+
+  <xacro:property name="rear_camera_pitch_limit"        value="2" />
+
+  <xacro:macro name="rear_camera_origin" >
+    <origin xyz="-0.3 0 0.2" rpy="0 0 3.14" />
+  </xacro:macro>
+  <xacro:macro name="rear_camera_yaw_origin" >
+    <origin xyz="0 0 0" rpy="0 0.7 0" />
+  </xacro:macro>s
+
+  <xacro:macro name="material_metal" >
+      <material name="metal">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+  </xacro:macro>
+
+  <xacro:macro name="material_black_plastic" >
+      <material name="black_plastic">
+        <color rgba="0.2 0.2 0.2 1"/>
+      </material>
+  </xacro:macro>
+
+  <link name="base_link" >
+    <visual>
+      <geometry>
+        <box size="${base_length} ${base_width} ${base_height}"/>
+      </geometry>
+      <origin xyz="0 0 ${(base_height/2)+base_ground_clearance}" rpy="0 0 0" />
+      <xacro:material_metal />
+    </visual>
+  </link>
+  <link name="base_top_link" />
+  <link name="body_bottom_prismatic_link" />
+  <link name="body_bottom_roll_link" />
+  <link name="body_bottom_yaw_link" >
+    <visual>
+      <geometry>
+        <box size="${body_length} ${body_width} ${body_height}"/>
+      </geometry>
+      <origin xyz="0 0 ${body_height/2}" rpy="0 0 0" />
+      <xacro:material_metal />
+    </visual>
+  </link>
+  <link name="top_camera_base_link" >
+    <visual>
+      <geometry>
+        <box size="${top_camera_base_length} ${top_camera_base_width} ${top_camera_base_height}"/>
+      </geometry>
+      <origin xyz="0 0 ${top_camera_mounting_height+(top_camera_base_height/2)}" rpy="0 0 0" />
+      <xacro:material_black_plastic />
+    </visual>
+  </link>
+  <link name="top_camera_yaw_link" />
+  <link name="top_camera_pitch_link" />
+  <link name="top_camera_link" >
+    <visual>
+      <geometry>
+        <box size="${top_camera_length} ${top_camera_width} ${top_camera_height}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <xacro:material_black_plastic />
+    </visual>
+  </link>
+  <link name="arm_base_link" >
+    <visual>
+      <geometry>
+        <box size="${arm_base_slide_length} ${arm_base_slide_width} ${arm_base_slide_height}"/>
+      </geometry>
+      <origin xyz="0 0 ${arm_base_slide_height/2 - arm_base_height/2}" rpy="0 0 0" />
+      <xacro:material_metal />
+    </visual>
+  </link>
+  <link name="arm_link_1" >
+    <visual>
+      <geometry>
+        <box size="${arm_base_length} ${arm_base_width} ${arm_base_height}"/>
+      </geometry>
+      <origin xyz="${arm_base_length/2} 0 0" rpy="0 0 0" />
+      <xacro:material_metal />
+    </visual>
+  </link>
+  <link name="arm_link_2" >
+    <visual>
+      <geometry>
+        <box size="${arm_link_2_length} ${arm_link_2_width} ${arm_link_2_height}"/>
+      </geometry>
+      <origin xyz="${arm_link_2_length/2} 0 0" rpy="0 0 0" />
+      <xacro:material_black_plastic />
+    </visual>
+  </link>
+  <link name="arm_link_3" >
+    <visual>
+       <geometry>
+        <box size="${arm_link_3_length} ${arm_link_3_width} ${arm_link_3_height}"/>
+      </geometry>
+      <origin xyz="${arm_link_3_length/2} 0 0" rpy="0 0 0" />
+      <xacro:material_black_plastic />
+    </visual>
+  </link>
+  <link name="arm_link_4" >
+    <visual>
+      <geometry>
+        <box size="${arm_link_4_length} ${arm_link_4_width} ${arm_link_4_height}"/>
+      </geometry>
+      <origin xyz="${arm_link_4_length/2} 0 0" rpy="0 0 0" />
+      <xacro:material_black_plastic />
+    </visual>
+  </link>
+  <link name="arm_link_5" >
+    <visual>
+      <geometry>
+        <box size="${arm_link_5_length} ${arm_link_5_width} ${arm_link_5_height}"/>
+      </geometry>
+      <origin xyz="${arm_link_5_length/2} 0 0" rpy="0 0 0" />
+      <xacro:material_black_plastic />
+    </visual>
+  </link>
+  <link name="arm_link_6" >
+    <visual>
+      <geometry>
+        <box size="${arm_link_6_length} ${arm_link_6_width} ${arm_link_6_height}"/>
+      </geometry>
+      <origin xyz="${arm_link_6_length/2} 0 0" rpy="0 0 0" />
+      <xacro:material_black_plastic />
+    </visual>
+  </link>
+  <link name="arm_gripper_link" >
+    <visual>
+      <geometry>
+        <box size="${gripper_length} ${gripper_width} ${gripper_height}"/>
+      </geometry>
+      <origin xyz="${gripper_length/2} 0 0" rpy="0 0 0" />
+      <xacro:material_metal />
+    </visual>
+  </link>
+  <link name="rear_camera_base_link" />
+  <link name="rear_camera_yaw_link" />
+  <link name="rear_camera_link" >
+    <visual>
+      <geometry>
+        <box size="${rear_camera_length} ${rear_camera_width} ${rear_camera_height}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <xacro:material_black_plastic />
+    </visual>
+  </link>
+
+  <joint name="base_top_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_top_link"/>
+    <origin xyz="0 0 ${base_height+base_ground_clearance}" rpy="0 0 0" />
+  </joint>
+
+  <joint name="body_bottom_prismatic_joint" type="prismatic">
+    <parent link="base_top_link"/>
+    <child link="body_bottom_prismatic_link"/>
+    <axis xyz="0 0 1" />
+    <origin xyz="0 0 ${body_base_min_gap}" rpy="0 0 0" />
+    <limit effort="1000.0" lower="0" upper="${body_base_max_gap-body_base_min_gap}" velocity="${body_vertical_vel}" />
+  </joint>
+
+  <joint name="body_bottom_roll_joint" type="revolute">
+    <parent link="body_bottom_prismatic_link"/>
+    <child link="body_bottom_roll_link" />
+    <axis xyz="1 0 0" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <limit effort="1000.0" lower="-${body_max_sideways_angle}" upper="${body_max_sideways_angle}" velocity="${body_sideways_ang_vel}" />
+  </joint>
+
+  <joint name="body_bottom_yaw_joint" type="revolute">
+    <parent link="body_bottom_roll_link" />
+    <child link="body_bottom_yaw_link" />
+    <axis xyz="0 1 0" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <limit effort="1000.0" lower="-${body_max_forward_angle}" upper="${body_max_forward_angle}" velocity="${body_forward_ang_vel}" />
+  </joint>
+
+  <joint name="top_camera_base_joint" type="fixed">
+    <parent link="body_bottom_yaw_link" />
+    <child link="top_camera_base_link" />
+    <origin xyz="${top_camera_mounting_distance} 0 ${body_height}" rpy="0 0 0" />
+  </joint>
+
+  <joint name="top_camera_yaw_joint" type="revolute">
+    <parent link="top_camera_base_link" />
+    <child link="top_camera_yaw_link" />
+    <origin xyz="0 0 ${top_camera_mounting_height}" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="1000.0" lower="-${top_camera_yaw_limit}" upper="${top_camera_yaw_limit}" velocity="${top_camera_yaw_velocity}" />
+  </joint>
+
+  <joint name="top_camera_pitch_joint" type="revolute">
+    <parent link="top_camera_yaw_link" />
+    <child link="top_camera_pitch_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="1000.0" lower="-${top_camera_pitch_limit}" upper="${top_camera_pitch_limit}" velocity="${top_camera_pitch_velocity}" />
+  </joint>
+
+  <joint name="top_camera_joint" type="fixed">
+    <parent link="top_camera_pitch_link" />
+    <child link="top_camera_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <joint name="arm_base_joint" type="fixed">
+    <parent link="body_bottom_yaw_link" />
+    <child link="arm_base_link" />
+    <origin xyz="${arm_position_x} -${arm_position_y} ${arm_position_z}" rpy="0 0 0" />
+  </joint>
+
+  <joint name="arm_joint_1" type="prismatic">
+    <parent link="arm_base_link" />
+    <child link="arm_link_1" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="1000.0" lower="0" upper="${arm_base_slide_limit}" velocity="${arm_base_slide_velocity}" />
+  </joint>
+
+  <joint name="arm_joint_2" type="revolute" >
+    <parent link="arm_link_1" />
+    <child link="arm_link_2" />
+    <origin xyz="${arm_joint_2_offset} 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="1000.0" lower="-${arm_joint_2_limit}" upper="${arm_joint_2_limit}" velocity="${arm_joint_2_velocity}" />
+  </joint> 
+
+  <joint name="arm_joint_3" type="revolute" >
+    <parent link="arm_link_2" />
+    <child link="arm_link_3" />
+    <origin xyz="${arm_link_2_length} 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="1000.0" lower="-${arm_joint_3_limit}" upper="${arm_joint_3_limit}" velocity="${arm_joint_3_velocity}" />
+  </joint> 
+
+  <joint name="arm_joint_4" type="revolute" >
+    <parent link="arm_link_3" />
+    <child link="arm_link_4" />
+    <origin xyz="${arm_link_2_length} 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="1000.0" lower="-${arm_joint_4_limit}" upper="${arm_joint_4_limit}" velocity="${arm_joint_4_velocity}" />
+  </joint>
+
+  <joint name="arm_joint_5" type="revolute" >
+    <parent link="arm_link_4" />
+    <child link="arm_link_5" />
+    <origin xyz="0.1 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="1000.0" lower="-${arm_joint_5_limit}" upper="${arm_joint_5_limit}" velocity="${arm_joint_5_velocity}" />
+  </joint> 
+
+  <joint name="arm_joint_6" type="revolute" >
+    <parent link="arm_link_5" />
+    <child link="arm_link_6" />
+    <origin xyz="0.05 0 0" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit effort="1000.0" lower="-${arm_joint_6_limit}" upper="${arm_joint_6_limit}" velocity="${arm_joint_6_velocity}" />
+  </joint>
+
+  <joint name="arm_gripper_joint" type="revolute" >
+    <parent link="arm_link_6" />
+    <child link="arm_gripper_link" />
+    <origin xyz="0.05 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="1000.0" lower="-${gripper_limit}" upper="${gripper_limit}" velocity="${gripper_velocity}" />
+  </joint> 
+
+
+  <joint name="rear_camera_base_joint" type="fixed">
+    <parent link="body_bottom_yaw_link" />
+    <child link="rear_camera_base_link" />
+    <xacro:rear_camera_origin />
+  </joint>
+
+  <joint name="rear_camera_yaw_joint" type="fixed">
+    <parent link="rear_camera_base_link" />
+    <child link="rear_camera_yaw_link" />
+    <xacro:rear_camera_yaw_origin />
+  </joint>
+
+  <joint name="rear_camera_joint" type="fixed">
+    <parent link="rear_camera_yaw_link" />
+    <child link="rear_camera_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+</robot>
+

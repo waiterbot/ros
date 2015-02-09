@@ -1,0 +1,18 @@
+beginner_tutorials:
+    Useful package to use as a reference for the bare minimum configuration.
+
+iai_kinect2: 
+    packages used to interface with the Kinect v2
+
+waiterbot_description:
+    Includes only the URDF file that describes waiterbot
+
+waiterbot_hardware_packages:
+    Packages that interface directly with hardware and expose hardware capabilitiies to the ROS system
+
+
+waiterbot_vision_packages:
+    Packages that deal with computer vision and processing.
+
+waiterbot_motion_packages:
+    Packages that deal with executing and calculating robot movements.

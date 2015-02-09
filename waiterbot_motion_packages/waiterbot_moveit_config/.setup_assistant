@@ -1,0 +1,8 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: waiterbot_description
+    relative_path: urdf/waiterbot.urdf
+  SRDF:
+    relative_path: config/waiterbot.srdf
+  CONFIG:
+    generated_timestamp: 1422543308

@@ -1,0 +1,4 @@
+waiterbot_failsafe:
+    Velocity forwarding layer inbetween the ROS navigation stack and high level A.I. Can accept velocity limits and limit and apply them to the sent commands.
+
+

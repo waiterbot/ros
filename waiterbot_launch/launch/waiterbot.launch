@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+
+    <include file="$(find waiterbot_state_publisher)/launch/waiterbot_state_publisher.launch" />
+
+    <!--<node name="rviz" type="rviz" pkg="rviz" />-->
+
+</launch>
